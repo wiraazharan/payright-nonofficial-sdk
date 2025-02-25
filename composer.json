@@ -1,0 +1,26 @@
+{
+    "name": "wiraazharan/payright-unofficial-sdk",
+    "description": "This is package for payright starter",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "firebase/php-jwt": "^6.0"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.0",
+        "firebase/php-jwt": "^6.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Payright\\PayrightUnofficialSdk\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Wira Azharan"
+        }
+    ],
+    "minimum-stability": "stable",
+    "version": "1.0.0"
+}
