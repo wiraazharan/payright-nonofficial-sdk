@@ -528,7 +528,7 @@ class PayrightUnofficialSdk
     // }
     public function PayoutServiceList($parameters = [], $useHmac = false)
     {
-        $URLPATH = "/api/v1/merchant/list-payout-services";
+        $URLPATH = "/api/v1/merchant/list-payout-providers";
         // ?skip=0&limit=10&start_date=01-01-1970&end_date=31-01-2099
         // $QUERYSTRING = "?skip=" . $skip . "&limit=" . $limit . "&start_date=" . $startDate . "&end_date=" . $endDate . "&invoice_status=" . $invoiceStatus;
         $HTTPMETHOD = "POST";
@@ -540,14 +540,12 @@ class PayrightUnofficialSdk
 
         if ($useHmac) {
             //GENERATE SIGNATURE
-            $URLPATHFORSIGNATURE = "/api/v1/merchant/list-payout-services";
-            $signatures = $this->GenerateSignature($this->UUID, $this->authToken, $this->hashKey, $HTTPMETHOD, $URLPATHFORSIGNATURE);
+            $URLPATHFORSIGNATURE = "/api/v1/merchant/list-payout-providers";
+            $signatures = $this->GenerateJwtTokenForRequestSignature($this->hashKey, $this->authToken, $HTTPMETHOD, $URLPATHFORSIGNATURE);
             //GENERATE SIGNATURE
 
             $header = [
-                'x-signature' => $signatures["x-signature"],
-                'x-timestamp' => $signatures["x-timestamp"],
-                'x-nonce' => $signatures["x-nonce"],
+                'x-signature' => $signatures
             ];
         }
 
@@ -567,51 +565,51 @@ class PayrightUnofficialSdk
         ];
         return $responses;
     }
-    public function PayoutTransactionList($parameters, $skip, $limit, $useHmac = false)
-    {
-        $URLPATH = "/api/v1/merchant/payout-transaction-list";
-        // ?skip=0&limit=10&start_date=01-01-1970&end_date=31-01-2099
-        // $QUERYSTRING = "?skip=" . $skip . "&limit=" . $limit . "&start_date=" . $startDate . "&end_date=" . $endDate . "&invoice_status=" . $invoiceStatus;
-        $QUERYSTRING = "?skip=" . $skip . "&limit=" . $limit;
-        $HTTPMETHOD = "POST";
-        $endpoint = $this->baseUrl . $URLPATH . $QUERYSTRING;
-        $header = [
-            'Content-Type' => 'application/json',
-            'auth-token' => $this->authToken,
-        ];
+    // public function PayoutTransactionList($parameters, $skip, $limit, $useHmac = false)
+    // {
+    //     $URLPATH = "/api/v1/merchant/payout-transaction-list";
+    //     // ?skip=0&limit=10&start_date=01-01-1970&end_date=31-01-2099
+    //     // $QUERYSTRING = "?skip=" . $skip . "&limit=" . $limit . "&start_date=" . $startDate . "&end_date=" . $endDate . "&invoice_status=" . $invoiceStatus;
+    //     $QUERYSTRING = "?skip=" . $skip . "&limit=" . $limit;
+    //     $HTTPMETHOD = "POST";
+    //     $endpoint = $this->baseUrl . $URLPATH . $QUERYSTRING;
+    //     $header = [
+    //         'Content-Type' => 'application/json',
+    //         'auth-token' => $this->authToken,
+    //     ];
 
-        if ($useHmac) {
-            //GENERATE SIGNATURE
-            $URLPATHFORSIGNATURE = "/api/v1/merchant/payout-transaction-list";
-            $signatures = $this->GenerateSignature($this->UUID, $this->authToken, $this->hashKey, $HTTPMETHOD, $URLPATHFORSIGNATURE);
-            //GENERATE SIGNATURE
+    //     if ($useHmac) {
+    //         //GENERATE SIGNATURE
+    //         $URLPATHFORSIGNATURE = "/api/v1/merchant/payout-transaction-list";
+    //         $signatures = $this->GenerateSignature($this->UUID, $this->authToken, $this->hashKey, $HTTPMETHOD, $URLPATHFORSIGNATURE);
+    //         //GENERATE SIGNATURE
 
-            $header = [
-                'x-signature' => $signatures["x-signature"],
-                'x-timestamp' => $signatures["x-timestamp"],
-                'x-nonce' => $signatures["x-nonce"],
-            ];
-        }
+    //         $header = [
+    //             'x-signature' => $signatures["x-signature"],
+    //             'x-timestamp' => $signatures["x-timestamp"],
+    //             'x-nonce' => $signatures["x-nonce"],
+    //         ];
+    //     }
 
-        // $parameters = [];
-        // Prepare the request body
-        $body = $parameters;
+    //     // $parameters = [];
+    //     // Prepare the request body
+    //     $body = $parameters;
 
-        // Make the POST request and get the response
-        $response = json_decode($this->PostRequestMamJsonBody($endpoint, $header, $body));
+    //     // Make the POST request and get the response
+    //     $response = json_decode($this->PostRequestMamJsonBody($endpoint, $header, $body));
 
-        // Prepare and return the response details
-        $responses = [
-            // "url" => $endpoint,
-            // "header" => $header,
-            // "body" => $body,
-            "response" => $response,
-        ];
-        return $responses;
-    }
+    //     // Prepare and return the response details
+    //     $responses = [
+    //         // "url" => $endpoint,
+    //         // "header" => $header,
+    //         // "body" => $body,
+    //         "response" => $response,
+    //     ];
+    //     return $responses;
+    // }
     public function CreatePayout($parameters, $useHmac = false)
     {
-        $URLPATH = "/api/v1/merchant/create-payout-invoice";
+        $URLPATH = "/api/v1/merchant/payout";
         // ?skip=0&limit=10&start_date=01-01-1970&end_date=31-01-2099
         // $QUERYSTRING = "?skip=" . $skip . "&limit=" . $limit . "&start_date=" . $startDate . "&end_date=" . $endDate . "&invoice_status=" . $invoiceStatus;
         // $QUERYSTRING = "?skip=" . $skip . "&limit=" . $limit;
@@ -624,14 +622,12 @@ class PayrightUnofficialSdk
 
         if ($useHmac) {
             //GENERATE SIGNATURE
-            $URLPATHFORSIGNATURE = "/api/v1/merchant/create-payout-invoice";
-            $signatures = $this->GenerateSignature($this->UUID, $this->authToken, $this->hashKey, $HTTPMETHOD, $URLPATHFORSIGNATURE);
+            $URLPATHFORSIGNATURE = "/api/v1/merchant/payout";
+            $signatures = $this->GenerateJwtTokenForRequestSignature($this->hashKey, $this->authToken, $HTTPMETHOD, $URLPATHFORSIGNATURE);
             //GENERATE SIGNATURE
 
             $header = [
-                'x-signature' => $signatures["x-signature"],
-                'x-timestamp' => $signatures["x-timestamp"],
-                'x-nonce' => $signatures["x-nonce"],
+                'x-signature' => $signatures
             ];
         }
 
@@ -653,7 +649,7 @@ class PayrightUnofficialSdk
     }
     public function PayoutStatus($invoiceNoOrExternalInvoiceRef, $useHmac = false)
     {
-        $URLPATH = "/api/v1/merchant/get-payout-transaction-by-id";
+        $URLPATH = "/api/v1/merchant/payout/{$invoiceNoOrExternalInvoiceRef}";
         // ?skip=0&limit=10&start_date=01-01-1970&end_date=31-01-2099
         // $QUERYSTRING = "?skip=" . $skip . "&limit=" . $limit . "&start_date=" . $startDate . "&end_date=" . $endDate . "&invoice_status=" . $invoiceStatus;
         $QUERYSTRING = "?_id=" . $invoiceNoOrExternalInvoiceRef;
@@ -666,14 +662,12 @@ class PayrightUnofficialSdk
 
         if ($useHmac) {
             //GENERATE SIGNATURE
-            $URLPATHFORSIGNATURE = "/api/v1/merchant/get-payout-transaction-by-id";
-            $signatures = $this->GenerateSignature($this->UUID, $this->authToken, $this->hashKey, $HTTPMETHOD, $URLPATHFORSIGNATURE);
+            $URLPATHFORSIGNATURE = "/api/v1/merchant/payout/{$invoiceNoOrExternalInvoiceRef}";
+            $signatures = $this->GenerateJwtTokenForRequestSignature($this->hashKey, $this->authToken, $HTTPMETHOD, $URLPATHFORSIGNATURE);
             //GENERATE SIGNATURE
 
             $header = [
-                'x-signature' => $signatures["x-signature"],
-                'x-timestamp' => $signatures["x-timestamp"],
-                'x-nonce' => $signatures["x-nonce"],
+                'x-signature' => $signatures
             ];
         }
 
